@@ -1,0 +1,37 @@
+{
+    "mcpServers": {
+        "notion": {
+            "command": "node",
+            "args": [
+                "C:\\Users\\<USER>\\AppData\\Roaming\\Antigravity\\User\\mcp-sse-proxy.js",
+                "https://mcp.flatfrog.games/notion/sse"
+            ],
+            "env": {
+                "CF_ACCESS_CLIENT_ID": "3bd6cf25eef3e3dc89c4da3ba4cb1a1a.access",
+                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN"
+            }
+        },
+        "github": {
+            "command": "node",
+            "args": [
+                "C:\\Users\\<USER>\\AppData\\Roaming\\Antigravity\\User\\mcp-sse-proxy.js",
+                "https://mcp.flatfrog.games/github/sse"
+            ],
+            "env": {
+                "CF_ACCESS_CLIENT_ID": "3bd6cf25eef3e3dc89c4da3ba4cb1a1a.access",
+                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN"
+            }
+        },
+        "sentry": {
+            "command": "node",
+            "args": [
+                "C:\\Users\\<USER>\\AppData\\Roaming\\Antigravity\\User\\mcp-sse-proxy.js",
+                "https://mcp.flatfrog.games/sentry/sse"
+            ],
+            "env": {
+                "CF_ACCESS_CLIENT_ID": "3bd6cf25eef3e3dc89c4da3ba4cb1a1a.access",
+                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN"
+            }
+        }
+    }
+}
