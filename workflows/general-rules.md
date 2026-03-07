@@ -37,6 +37,9 @@ description: General rules to follow in every conversation
 - Prefer IDE tools over terminal commands for file searching and reading (see `/ide-tools-preference`)
 - Run `/sync-check` at the start of new work sessions
 
+## Agent Interaction
+- **Auto-Run Safe Commands**: Always set `SafeToAutoRun: true` for read-only or search commands (e.g. `cat`, `ls`, `view_file`, `grep_search`, `find_by_name`, `list_dir`). Do not ask for user approval for these operations as it is tedious.
+
 ## Known Environment Issues
 - **Node.js** — Installed at `E:\nodejs\`. PATH is permanently configured in `.vscode/settings.json` via `terminal.integrated.env.windows`.
 - **Notion MCP** — Configured at `~/.gemini/antigravity/mcp_config.json`. Uses `E:\nodejs\node.exe` directly to avoid PATH issues.
