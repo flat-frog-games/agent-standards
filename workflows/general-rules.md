@@ -14,6 +14,7 @@ description: General rules to follow in every conversation
 ## Git & Workflow
 - **Never push directly to `main`** — always use feature branches and PRs
 - **No long-lived development branches** — create short-lived feature branches off `main` and merge them frequently via PRs. Evaluate and merge work in small, incremental PRs.
+- **Automated Deployment Concurrency** — Always configure `concurrency: { group: 'deploy', cancel-in-progress: false }` in GitHub Actions workflows that publish or deploy infrastructure (e.g., Terraform) to prevent state lock collisions and deployment race conditions during rapid PR merges.
 - Branch naming: `feat/`, `fix/`, `refactor/`, `docs/` prefixes
 - Commit messages: imperative mood, concise (e.g. "Add tower targeting priority")
 
