@@ -16,6 +16,7 @@ description: General rules to follow in every conversation
 - **No long-lived development branches** — create short-lived feature branches off `main` and merge them frequently via PRs. Evaluate and merge work in small, incremental PRs.
 - Branch naming: `feat/`, `fix/`, `refactor/`, `docs/` prefixes
 - Commit messages: imperative mood, concise (e.g. "Add tower targeting priority")
+- **Shared Submodules**: When making changes to shared submodules (like `.agents`), ensure you commit and push the changes back to the origin submodule repository, and then commit the submodule pointer update in the main repository.
 
 ## Documentation
 - Update `CHANGELOG.md` for any **player-facing** change (see `/update-changelog`)
