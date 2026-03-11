@@ -1,90 +1,60 @@
 ---
 name: Game Design
-description: Tower defence game design patterns, balance principles, and design documentation for Clearance Defence
+description: Generic game design patterns, balance principles, and wave design patterns.
 ---
 
 # Game Design Skill
 
-## Game Concept
-
-**Clearance Defence** is a tower defence game set in a retail store at night. Seasonal clearance goods fight for survival against invading Summer products (garden gnomes). The game combines classic tower defence with resource logistics and a quirky theme.
-
 ## Design Pillars
 
-1. **Resource Logistics** — towers need ammo resupply via engineers from FOBs
-2. **Strategic Depth** — upgrade path choices at level 2 (branching specialisations)
-3. **Whimsical Theme** — "Make-Do" improvised weapons from retail goods
-4. **Readable Combat** — "Pawn" art style ensures clarity during intense waves
+When creating or iterating on a game's design, define robust pillars that anchor your creative decisions:
+1. **Core Loop** — What the player does minute-to-minute (e.g., gather resources -> build defenses).
+2. **Strategic Depth** — Ensuring player choices matter, such as specialized upgrade paths.
+3. **Thematic Cohesion** — Mechanics should reflect the thematic narrative.
 
 ## Balance Framework
 
-### Tower Balance Triangle
+### Categorizing Roles
 
-| Tower | Role | Strength | Weakness |
-|-------|------|----------|----------|
-| Projectile | General purpose | Cheap, reliable | Low DPS |
-| Bombardier | AoE damage | Area denial | Expensive, slow |
-| Extinguisher | Crowd control | Slows enemies | Low damage |
-| Laser | Single target DPS | High damage | Battery-hungry |
+| Generic Role | Strength | Weakness |
+|--------------|----------|----------|
+| Generalist | Jack-of-all-trades | Lacks specialized burst/utility |
+| Area of Effect (AoE) | Crowd control/damage | Slow fire rate / High cost |
+| Support/Utility | Buffs/debuffs | Low or zero base damage |
+| Single Target DPS | High burst damage | Vulnerable to swarms |
 
-### Economy Flow
+### Economy Flow Standard
+An internal economy flowchart should trace the life of a resource:
 ```
-Safe Zone (produces resources)
-    → Delivery Engineers carry to FOBs
-        → Engineers resupply towers from FOBs
-            → Towers consume ammo fighting enemies
+Generation (Passive/Active)
+    → Collection / Logistics
+        → Expenditure (Upgrades/Units)
 ```
 
-### Difficulty Scaling
+### Difficulty Scaling Approaches
 
-| Setting | Enemy HP | Enemy Speed | Resource Multiplier | Starting Resources |
-|---------|----------|-------------|--------------------|--------------------|
-| Easy | Base | Base | 1.5× | More |
+| Setting | Enemy HP | Enemy Speed | Economic Modifier | Starting Resources |
+|---------|----------|-------------|-------------------|--------------------|
+| Easy | Base | Base | 1.5× | High |
 | Normal | Base | Base | 1.0× | Standard |
-| Hard | Higher | Faster | 0.75× | Less |
+| Hard | Higher | Faster | 0.8× | Low |
 
-## Wave Design Principles
+## Progression & Content Design
 
-1. **Early waves** — teach mechanics one at a time (place tower → manage ammo → upgrade)
-2. **Mid waves** — introduce pressure (multiple paths, tougher enemies)
-3. **Late waves** — test mastery (resource scarcity, fast enemies, boss gnomes)
+### Introducing Mechanics (Pacing)
+1. **Early game** — Teach mechanics one at a time (e.g., place unit, gather resource).
+2. **Mid game** — Introduce pressure (multiple paths, complex enemy abilities).
+3. **Late game** — Test mastery (resource scarcity, overwhelming speed, bosses).
 
-### Wave Configuration
-Waves are defined as `.tres` resources in `scenes/production/resources/`:
-- `wave_1.tres` through `wave_N.tres`
-- Configure: enemy count, spawn rate, enemy types, reward resources
+### Upgrade Path Standard
+When creating branching upgrade trees:
+- **Variant A**: Focused specialization (e.g., extreme single-target damage).
+- **Variant B**: Spread utility (e.g., wide area effects).
+- **Rule**: Both paths must be viable alternatives, ensuring no single "correct choice" dominates every scenario.
 
-## Upgrade Path Design
-
-Each tower branches at level 2 into two mutually exclusive paths:
-
-```
-Level 1 (Base) → Level 2 (choose A or B) → Level 3 (A or B enhanced)
-```
-
-Design rules for paths:
-- **Path A**: Usually the "focused" variant (more damage, less area)
-- **Path B**: Usually the "spread" variant (more area, less single-target)
-- Both paths must be viable — no obvious "right choice"
-
-## Adding New Content
-
-### New Tower Checklist
-1. Define the role (what gap does it fill?)
-2. Set base stats (damage, range, fire rate, cost)
-3. Design two upgrade paths with clear identity
-4. Ensure unique ammo type if needed
-5. Update wiki, asset list, and changelog
-
-### New Enemy Checklist
-1. Define the threat (what does it challenge?)
-2. Set stats (HP, speed, damage, reward)
-3. Consider visual distinction from existing enemies
-4. Plan which wave(s) it appears in
-5. Update wiki, asset list, and changelog
-
-## Useful References
-- Wiki docs: `docs/wiki/` (source of truth for stats)
-- Balance changes: use `/balance-update` workflow
-- Art direction: Notion ART GDD page
-- Asset tracking: Notion Asset List page
+## New Content Integration
+When introducing new units/mechanics:
+1. Define the role (what gameplay gap does it fill?).
+2. Set base attributes.
+3. Outline upgrades/progression.
+4. Update central documentation, wiki, and changelog immediately.
