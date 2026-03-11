@@ -17,6 +17,7 @@ description: General rules to follow in every conversation
 - **Automated Deployment Concurrency** — Always configure `concurrency: { group: 'deploy', cancel-in-progress: false }` in GitHub Actions workflows that publish or deploy infrastructure (e.g., Terraform) to prevent state lock collisions and deployment race conditions during rapid PR merges.
 - Branch naming: `feat/`, `fix/`, `refactor/`, `docs/` prefixes
 - Commit messages: imperative mood, concise (e.g. "Add tower targeting priority")
+- **Shared Submodules**: When making changes to shared submodules (like `.agents`), ensure you commit and push the changes back to the origin submodule repository, and then commit the submodule pointer update in the main repository.
 
 ## Documentation
 - Update `CHANGELOG.md` for any **player-facing** change (see `/update-changelog`)
