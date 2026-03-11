@@ -50,6 +50,13 @@ Once work is complete and tested locally:
 - **Push**: `git push -u origin HEAD`
 - **Create PR**: `gh pr create --title "<type>: <description>" --body "Closes #ISSUE_NUMBER" --base main`
 - **Squash and Merge**: The PR title MUST follow Conventional Commits, because the squash and merge operation will use the PR title as the final commit message on `main`.
+- **Agent Post-PR Prompt**: Immediately after creating a PR, the agent MUST ask the user:
+  1. "Would you like me to merge it in for you?"
+  2. "Would you like me to do some more work on this branch?"
+  3. "Will you be merging it yourself?"
+- **Pipeline Tailing**: 
+  - If the agent merges the PR, the agent MUST automatically tail the CI/CD pipeline (using `gh run watch` or similar) to ensure the build completes successfully and report any errors.
+  - If the user chooses to merge the PR themselves, the agent MUST ask the user if they would like the agent to tail the pipeline to check for errors.
 
 ## 6. Internal Builds & Releases
 - Internal Beta / CI builds use a commit-specific identifier appended to the semantic version: `<CurrentVersion>-build.<ShortSHA>` (e.g., `v0.9.12-build.7a3b4c9`).
