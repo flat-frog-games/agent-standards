@@ -30,6 +30,9 @@ Format:
 
 ### Breaking Changes:
 If a commit introduces a breaking change (e.g., save files are no longer compatible), append a `!` after the type/scope or include `BREAKING CHANGE:` in the footer. **Triggers a MAJOR bump.**
+
+**CRITICAL RULE:** The agent must **NEVER** use `feat!:` or `BREAKING CHANGE:` to trigger a major bump unless the user explicitly commands it. Major bumps are strictly controlled by the developer.
+
 ```bash
 feat!: completely overhaul the tower upgrade system making old saves invalid
 ```
@@ -47,3 +50,12 @@ When opening a PR via `gh pr create`, ensure the PR title itself follows the Con
 ```bash
 gh pr create --title "fix: resolve Sentry crash in tower_manager" --body "Closes #55" --base main
 ```
+
+## 4. Internal Build Versioning
+For CI builds pushed to internal branches (like Steam beta), the Semantic Version is constant, but a commit-specific build identifier is appended. 
+To avoid visually confusing characters (like `+`), use a hyphen separating the build prefix and the short SHA.
+
+**Format:** `<CurrentVersion>-build.<ShortSHA>`
+**Example:** `v0.9.12-build.7a3b4c9`
+
+This ensures every internal deploy gets a unique release tag in Sentry for precise crash tracking, while public deployments use clean tags like `v0.9.13`.
