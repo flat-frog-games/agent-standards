@@ -52,6 +52,13 @@ gh pr list
 gh pr status
 ```
 
+## Sentry Issues
+
+When handling bugs and errors sourced from Sentry:
+1. Create a GitHub issue using `gh issue create` representing the Sentry bug and include relevant stack traces and context.
+2. **Immediately** close/resolve the Sentry issue on the Sentry Dashboard (or via the Sentry MCP if available) so the Sentry queue is kept clean. Rely on the newly created GitHub Issue for all future progress tracking.
+3. Fix the bug in a feature branch, open a PR closing the GitHub issue, and merge it as usual.
+
 ## Closing Issues
 Issues are automatically closed when a PR with `Closes #N` is merged. To close manually:
 ```bash
