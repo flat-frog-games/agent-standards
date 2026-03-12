@@ -16,3 +16,10 @@ To standardise your local IDE or Agent environment, please follow these steps:
 6. Restart/Reload your IDE or Agent session. 
 
 The environment should instantly connect securely to `mcp.flatfrog.games` and sync down the `github`, `notion`, and `sentry` tools!
+
+## Best Practices
+
+When building or updating custom MCP hubs/proxies:
+1. **Use the Official SDK**: Always rely on `@modelcontextprotocol/sdk` (e.g. `SSEServerTransport`, `StdioClientTransport`) in remote servers instead of manually parsing JSON streams or `stdout` buffers. This prevents stream corruption and ensures lifecycle events are mapped correctly.
+2. **Silence Non-JSON-RPC Logging**: Local script clients (like `mcp-sse-proxy.js`) should NEVER emit strings to stdout/stderr that are not strictly valid JSON-RPC 2.0 objects. IDEs like Antigravity treat arbitrary `stderr` output as fatal crashes and forcefully drop the connection.
+3. **Handle EOF and Heartbeats**: If connecting through infrastructure like Cloudflare Tunnels, employ HTTP keep-alives or custom ping/pong events so the socket doesn't idle out and trigger `EOF` timeouts.
