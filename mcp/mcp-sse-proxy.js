@@ -17,7 +17,7 @@ if (clientId && clientSecret) {
     headers['CF-Access-Client-Secret'] = clientSecret;
 }
 if (hubApiKey) {
-    headers['HUB_API_KEY'] = hubApiKey;
+    headers['Authorization'] = `Bearer ${hubApiKey}`;
 }
 
 let messageEndpoint = null;
@@ -96,7 +96,7 @@ function sendMessage(msg) {
         postHeaders['CF-Access-Client-Secret'] = clientSecret;
     }
     if (hubApiKey) {
-        postHeaders['HUB_API_KEY'] = hubApiKey;
+        postHeaders['Authorization'] = `Bearer ${hubApiKey}`;
     }
     
     const postReq = https.request({
