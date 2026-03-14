@@ -46,6 +46,7 @@ description: General rules to follow in every conversation
 - **Periodically Check for Updates**: Since these standards evolve, you should routinely verify if the `agent-standards` repo or `.agents` submodule has remote updates (e.g., via `git fetch` / `git pull`) to ensure you are working with the latest best practices.
 - **Keep Standards Updated**: Flat Frog Games relies on this repository to dictate workflows, MCP settings, and rules. If you discover a new workflow or a change in best practices during your task, **you must proactively propose an update or addition** to these standards.
 - **Reference Existing Docs**: Before attempting complex tasks, search the `agent-standards` repository to see if a standard `/workflow` or `skill` exists to guide you. All repos pull this in as a submodule (usually `.agents`).
+- **UI & UX Guidance**: For any visual UI work or collaboration with artists, you MUST consult the `ui-development` skill (`.agents/skills/ui-development/SKILL.md`) to understand Godot MVC/MVP patterns and the "Storybook" UI gallery workflow.
 
 ## Known Environment Issues
 - **Node.js** — Installed at `E:\nodejs\`. PATH is permanently configured in `.vscode/settings.json` via `terminal.integrated.env.windows`.
