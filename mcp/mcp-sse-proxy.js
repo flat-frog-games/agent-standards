@@ -1,6 +1,15 @@
 const https = require('https');
 const readline = require('readline');
 
+// Enforce single-socket pipelining to avoid POST race conditions
+// If multiple JSON-RPC calls are made in the same tick, parallel sockets
+// can deliver them out-of-order, crashing the remote SDK due to missing initialization.
+const keepAliveAgent = new https.Agent({
+    keepAlive: true,
+    maxSockets: 1,
+    maxFreeSockets: 1
+});
+
 const targetUrl = process.argv[2];
 const clientId = process.env['CF_ACCESS_CLIENT_ID'];
 const clientSecret = process.env['CF_ACCESS_CLIENT_SECRET'];
@@ -104,7 +113,8 @@ function sendMessage(msg) {
         hostname: url.hostname,
         port: url.port,
         path: url.pathname + url.search,
-        headers: postHeaders
+        headers: postHeaders,
+        agent: keepAliveAgent
     }, (postRes) => {
         if (postRes.statusCode < 200 || postRes.statusCode >= 300) {
             console.error(`POST error: HTTP ${postRes.statusCode}`);
