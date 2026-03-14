@@ -15,6 +15,7 @@ All work starts with an issue.
 ## 2. Branching Strategy
 - **Create Branch**: Create a short-lived feature branch derived from `main`. Do not use long-lived shared development branches.
 - **Command**: `git checkout -b <type>/<issue-description>` (e.g., `feat/add-new-tower`, `fix/resolve-crash`).
+  - *Batching Issues*: If batching multiple fixes into one branch, name the branch after the **first or most significant issue** (e.g., `fix/resolve-crash-and-others`).
 
 ## 3. Commit Formatting & Semantic Versioning
 The project uses **Conventional Commits** to automate Semantic Versioning (SemVer) and Changelog generation.
@@ -22,15 +23,17 @@ The project uses **Conventional Commits** to automate Semantic Versioning (SemVe
 **Format**:
 `<type>(<optional scope>): <description>`
 
+- If the commit fixes a specific issue, include the issue reference in the commit (e.g., title: `fix: resolve null reference`, body: `Fixes #123`). This is essential when grouping multiple fixes in a single PR to ensure each fix properly closes its corresponding issue and populates the changelog correctly.
+
 **Allowed Types**:
 - `feat:` A new feature. **Triggers a MINOR bump.**
-- `fix:` A bug fix. **Triggers a PATCH bump.**
+- `fix:` A player-facing bug fix. **Triggers a PATCH bump.**
 - `docs:` Documentation only changes.
 - `style:` Formatting changes.
 - `refactor:` A code change that neither fixes a bug nor adds a feature.
 - `perf:` Performance improvements.
 - `test:` Adding or correcting tests.
-- `chore:` Build process or auxiliary tool changes.
+- `chore:` Build process, auxiliary tools, or non-player-facing backend fixes (e.g. Sentry crash resolutions, telemetry, internal CI scripts). **Does not trigger changelog notes.**
 
 **Breaking Changes**: Append `!` after type/scope (e.g. `feat!: overhaul system`). **Triggers a MAJOR bump.** Only do this when explicitly commanded by the user.
 
@@ -48,9 +51,12 @@ When a player-facing change (usually `feat` or `fix`) is completed, update `CHAN
 ## 5. Pull Requests
 Once work is complete and tested locally:
 - **Push**: `git push -u origin HEAD`
-- **Create PR**: `gh pr create --title "<type>: <description>" --body "Closes #ISSUE_NUMBER" --base main`
-- **Squash and Merge**: The PR title MUST follow Conventional Commits, because the squash and merge operation will use the PR title as the final commit message on `main`.
-- **Agent Post-PR Prompt**: Immediately after creating a PR, the agent MUST ask the user:
+- **Create PR**: `gh pr create --title "<type>: <description>" --body "Closes #123, Closes #124" --base main` (Include all relevant closed issues in the body).
+- **Merging Strategy**:
+  - **Single Issue PRs**: Use **Squash and Merge**. The PR title MUST follow Conventional Commits, because the squash operation uses the PR title as the final commit message on `main`.
+  - **Batch Fix PRs**: Use **Rebase and Merge**. This ensures every atomic fix (which acts as the trigger for the changelog) is preserved as individual commits on `main`. *Rule*: Every single commit on a batched branch MUST be a perfectly formatted Conventional Commit, and cannot contain "wip" or broken states.
+- **Manual Testing Prompt**: Before merging any PR, the agent MUST ask the user: "Have you manually run and tested this scenario in the game to confirm it works?" Merging should only proceed after the user confirms.
+- **Agent Post-PR Prompt**: Immediately after creating and verifying a PR, the agent MUST ask the user:
   1. "Would you like me to merge it in for you?"
   2. "Would you like me to do some more work on this branch?"
   3. "Will you be merging it yourself?"
