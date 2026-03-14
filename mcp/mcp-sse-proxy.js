@@ -4,6 +4,7 @@ const readline = require('readline');
 const targetUrl = process.argv[2];
 const clientId = process.env['CF_ACCESS_CLIENT_ID'];
 const clientSecret = process.env['CF_ACCESS_CLIENT_SECRET'];
+const hubApiKey = process.env['HUB_API_KEY'];
 
 if (!targetUrl) {
     console.error("Missing URL.");
@@ -14,6 +15,9 @@ const headers = { 'Accept': 'text/event-stream' };
 if (clientId && clientSecret) {
     headers['CF-Access-Client-Id'] = clientId;
     headers['CF-Access-Client-Secret'] = clientSecret;
+}
+if (hubApiKey) {
+    headers['HUB_API_KEY'] = hubApiKey;
 }
 
 let messageEndpoint = null;
@@ -90,6 +94,9 @@ function sendMessage(msg) {
     if (clientId && clientSecret) {
         postHeaders['CF-Access-Client-Id'] = clientId;
         postHeaders['CF-Access-Client-Secret'] = clientSecret;
+    }
+    if (hubApiKey) {
+        postHeaders['HUB_API_KEY'] = hubApiKey;
     }
     
     const postReq = https.request({
