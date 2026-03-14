@@ -8,7 +8,8 @@
             ],
             "env": {
                 "CF_ACCESS_CLIENT_ID": "3bd6cf25eef3e3dc89c4da3ba4cb1a1a.access",
-                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN"
+                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN",
+                "HUB_API_KEY": "YOUR_HUB_API_KEY"
             }
         },
         "github": {
@@ -19,7 +20,8 @@
             ],
             "env": {
                 "CF_ACCESS_CLIENT_ID": "3bd6cf25eef3e3dc89c4da3ba4cb1a1a.access",
-                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN"
+                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN",
+                "HUB_API_KEY": "YOUR_HUB_API_KEY"
             }
         },
         "sentry": {
@@ -30,7 +32,20 @@
             ],
             "env": {
                 "CF_ACCESS_CLIENT_ID": "3bd6cf25eef3e3dc89c4da3ba4cb1a1a.access",
-                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN"
+                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN",
+                "HUB_API_KEY": "YOUR_HUB_API_KEY"
+            }
+        },
+        "miro": {
+            "command": "node",
+            "args": [
+                "C:\\Users\\<USER>\\AppData\\Roaming\\Antigravity\\User\\mcp-sse-proxy.js",
+                "https://mcp.flatfrog.games/miro/sse"
+            ],
+            "env": {
+                "CF_ACCESS_CLIENT_ID": "3bd6cf25eef3e3dc89c4da3ba4cb1a1a.access",
+                "CF_ACCESS_CLIENT_SECRET": "YOUR_CF_SECRET_TOKEN",
+                "HUB_API_KEY": "YOUR_HUB_API_KEY"
             }
         }
     }
