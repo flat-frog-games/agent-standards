@@ -4,18 +4,24 @@ Flat Frog Games leverages remote AI MCP Servers (Model Context Protocol) via sec
 
 This ensures tools like GitHub native integrations, Notion documentation queries, and Sentry log querying are universally accessible to AI engineering bots without duplicating binaries locally. 
 
-## Installation Instructions
+## Installation & Maintenance Instructions
 
-To standardise your local IDE or Agent environment, please follow these steps:
+To standardise your local IDE or Agent environment, you should use the automated synchronization script. This script will ensure you have the latest `mcp-sse-proxy.js` proxy and will scaffold your `mcp.json` if it doesn't already exist.
 
-1. Copy the `mcp-sse-proxy.js` file into your AI Agent's configuration folder (e.g. `%APPDATA%\Antigravity\User\`).
-2. Copy `mcp.json.template` into the same configuration folder and rename it to `mcp.json`.
-3. Open the newly copied `mcp.json` file.
-4. Replace `<USER>` with your local Windows username in the absolute path strings.
-5. Replace `YOUR_CF_SECRET_TOKEN` with the shared internal development Cloudflare Service Access Token.
-6. Restart/Reload your IDE or Agent session. 
+1. Open PowerShell and navigate to `agent-standards/mcp/`.
+2. Run the sync script:
+   ```powershell
+   .\sync-ide-mcp.ps1
+   ```
+3. Open `%APPDATA%\Antigravity\User\mcp.json`.
+4. Ensure `YOUR_CF_SECRET_TOKEN` is set to the shared internal development Cloudflare Service Access Token.
+5. Ensure `YOUR_HUB_API_KEY` is set to your Flat Frog Games MCP Hub API token.
+6. Restart/Reload your IDE or Agent session.
 
 The environment should instantly connect securely to `mcp.flatfrog.games` and sync down the `github`, `notion`, and `sentry` tools!
+
+> [!TIP]
+> **AI Agents**: If the user reports a "context deadline exceeded" or MCP connection error in their IDE, you MUST run `.\sync-ide-mcp.ps1` to ensure their local proxy script is not outdated before attempting complex remote troubleshooting.
 
 ## Best Practices
 
