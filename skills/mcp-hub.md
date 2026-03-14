@@ -13,6 +13,7 @@ This document provides important context, architectural rules, and troubleshooti
   - **Constraint**: `attribute:node-type == flatfrog`.
   - **WARNING**: Do NOT temporarily modify this constraint to deploy to another node (like `arundel`). Attempting to bypass this constraint creates split infrastructure and routing failures (e.g., Cloudflare continuing to route to the offline node).
 - **Network Mode**: The ECS Task uses `networkMode: "host"` targeting port `8083`. This means the container maps directly to port 8083 on the underlying EC2 instance OS.
+- **Image Tagging (CRITICAL)**: Because the ECS cluster runs on an EC2 instance, the local node daemon heavily caches Docker images. **If you push a code change to `mcp-hub`, you MUST manually bump the `IMAGE_TAG` in `.github/workflows/deploy.yml` and `terraform/main.tf` (e.g. from `v2` to `v3`).** If you just use `:latest` or keep the same tag, ECS will silently restart the old cached container and your code changes will not be executed!
 
 ## 2. Common Deployment Issues & Troubleshooting
 
