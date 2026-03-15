@@ -12,5 +12,9 @@ Because the IDE strictly follows tool schemas, it will automatically prompt you 
 Whenever you are using **ANY** of the Notion MCP tools (e.g., `mcp_notion_API-post-search`, `mcp_notion_API-get-page`, etc.), you **MUST INSTRUCTIONALLY OMIT** the `Notion-Version` parameter from your tool call arguments. 
 
 Leave the `Notion-Version` argument completely blank/undefined.
+## Proxy Stability Update (March 2026)
+Previously, the IDE's proxy script (`mcp-sse-proxy.js`) used chunked transfer encoding for its JSON-RPC payloads. Cloudflare and the remote servers would abruptly drop these connections without a response, leading to an infinite hang in the IDE.
 
-If you include it, your tool call will instantly crash with an `EOF / client is closing` error!
+This has been fixed! The proxy now correctly calculates and sends the `Content-Length` header. 
+
+**However, the above `Notion-Version` workaround is still required.** If you include `Notion-Version`, the server will now gracefully return an explicit JSON-RPC error format instead of hanging indefinitely, but your tool call will still fail.
