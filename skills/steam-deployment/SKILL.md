@@ -113,4 +113,5 @@ Use the `/create-release` workflow, which covers:
 ### Common Build Issues
 - **Missing export templates**: Ensure Godot export templates match the engine version
 - **Sentry parse errors in CI**: The CI Godot build may not have Sentry SDK — guard with `Engine.has_singleton("SentrySDK")`
+- **Sentry validation failures in CI (`options/dsn line not found`)**: Godot automatically strips empty string variables like `options/dsn=""` from `project.godot` on save. You must manually re-add `options/dsn=""` directly to `project.godot` (bypassing the editor) so the CI pipeline's `sed` command has a placeholder to inject the secret into.
 - **Display server errors**: CI runs headless — use `--headless` flag and avoid display-dependent code in autoloads
