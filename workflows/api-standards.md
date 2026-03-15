@@ -47,8 +47,10 @@ When developing and maintaining APIs, adhere to these industry standards:
 - **Deprecation Strategy:** Never remove an endpoint without a clear deprecation schedule and communicating alternative endpoints.
 
 ### 2. Security
+### 2. Security
 - **Least Privilege:** API roles and Lambda execution roles should only have access to exactly what they need.
-- **Edge Protection:** All public-facing APIs must be protected by a WAF (Web Application Firewall) to handle rate limiting, IP whitelisting, and DDoS protection.
+- **Edge Protection:** All public-facing APIs must be protected by a WAF (Web Application Firewall) to handle rate limiting and DDoS protection. 
+- **Internal / Development APIs:** APIs that are not yet ready for the public, or are meant for internal administration, MUST be secured at the WAF level using an IP Set whitelist restricted to the developer's Home IP.
 - **Authentication:** Enforce strict authentication (e.g., Cognito User Pools, API Keys) on all non-public endpoints.
 
 ### 3. Maintenance & Observability
@@ -61,7 +63,9 @@ When developing and maintaining APIs, adhere to these industry standards:
 - **Project Structure:** For moderately large APIs, use a modular monolith architecture. Group related handlers in `cmd/` but deploy them as separate AWS Lambda functions to avoid "serverless hell".
 - **Handlers vs Business Logic:** The Lambda `main.go` handler should only parse the API Gateway event, extract parameters, and handle top-level HTTP response logic. All actual business logic must live in the `internal/` service layer.
 
-### 5. API Gateway & Infrastructure as Code
+### 5. Infrastructure Separation (Terraform vs AWS CDK)
+To maintain a clean and scalable deployment pipeline, we enforce a strict separation of concerns for Infrastructure as Code (IaC):
+- **Terraform (Underlying Infrastructure):** Use Terraform exclusively for persistent, stateful, or foundational infrastructure that changes infrequently. This includes DynamoDB Tables, Cognito User Pools, SSM Parameters, ACM Certificates, and global WAF ACLs.
+- **AWS CDK (Compute & Routing):** Use AWS CDK exclusively for the API compute and routing layer. This includes the API Gateway, Lambda functions, Lambda IAM execution roles, and attaching the pre-existing WAFs/Certificates. CDK is executed during the standard CI/CD deployment pipeline.
 - **Proxy Integrations:** Always use API Gateway Lambda Proxy integrations. Rely on `github.com/aws/aws-lambda-go/events` to parse requests and format responses.
 - **CORS & Binary Data:** Explicitly handle CORS headers within the Go Lambda response itself. If handling images/binary data, ensure API Gateway is configured for binary media types and the Go code handles base64 decoding correctly.
-- **IaC Strictness:** All infrastructure (DynamoDB, Lambdas, API Gateways, WAFs) MUST be defined in Infrastructure as Code (e.g., AWS CDK). No clicking around in the AWS Console.
