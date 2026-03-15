@@ -6,6 +6,9 @@ description: Standards and best practices for creating, documenting, and maintai
 
 When building, expanding, or documenting any APIs (like the Gamification API), we follow a strict three-pillar approach. This ensures our APIs are accessible to humans, perfectly parseable by AI agents, and built to robust industry standards.
 
+> [!IMPORTANT]
+> **Continuous Evolution Rule:** AI Agents reading this document MUST proactively update this `api-standards.md` file whenever a new, recurring API best practice or architectural pattern is established during development. This document is a living standard that must evolve alongside our tech stack.
+
 ---
 
 ## Pillar 1: Human Documentation (The "Why" and "How")
