@@ -99,7 +99,10 @@ function sendMessage(msg) {
         return;
     }
     const url = new URL(messageEndpoint);
-    const postHeaders = { 'Content-Type': 'application/json' };
+    const postHeaders = { 
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(msg)
+    };
     if (clientId && clientSecret) {
         postHeaders['CF-Access-Client-Id'] = clientId;
         postHeaders['CF-Access-Client-Secret'] = clientSecret;
